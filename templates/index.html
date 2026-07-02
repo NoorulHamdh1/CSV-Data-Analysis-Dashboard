@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+CSV Data Analysis Dashboard
+
+</title>
+
+<link
+rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<h1>
+
+CSV Data Analysis Dashboard
+
+</h1>
+
+<p>
+
+Upload a CSV file and explore its statistics.
+
+</p>
+
+</header>
+
+<form
+method="POST"
+enctype="multipart/form-data">
+
+<input
+type="file"
+name="csv_file"
+accept=".csv"
+required>
+
+<button>
+
+Analyze Dataset
+
+</button>
+
+</form>
+
+{% if error %}
+
+<div class="error">
+
+{{ error }}
+
+</div>
+
+{% endif %}
+
+{% if rows %}
+
+<div class="summary">
+
+<div class="card">
+
+<h3>Rows</h3>
+
+<h2>{{ rows }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Columns</h3>
+
+<h2>{{ columns }}</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Missing Values</h3>
+
+<h2>{{ missing }}</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>
+
+Dataset Preview
+
+</h2>
+
+{{ preview|safe }}
+
+</div>
+
+<div class="card">
+
+<h2>
+
+Statistical Summary
+{% if plot_path %}
+
+<div class="card">
+
+    <h2>Histogram</h2>
+
+    <img
+        src="{{ url_for('static', filename='plots/histogram.png') }}"
+        class="plot">
+
+</div>
+
+{% endif %}
+
+</h2>
+
+{{ stats|safe }}
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+
+</html>
